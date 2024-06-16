@@ -1,10 +1,25 @@
 {
-  "dependencies": {
-    "inquirer": "^9.2.23"
+  "name": "autoform-simple-icon",
+  "version": "1.0.0",
+  "description": "This is a simple SVG logo maker.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Katherine-Be/AutoForm-Simple-Icon.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Katherine-Be/AutoForm-Simple-Icon/issues"
+  },
+  "homepage": "https://github.com/Katherine-Be/AutoForm-Simple-Icon#readme",
   "devDependencies": {
     "jest": "^29.7.0"
-  },  "scripts": {
-    "test": "jest"
+  },
+  "dependencies": {
+    "inquirer": "^8.2.4"
   }
 }

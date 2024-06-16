@@ -1,8 +1,13 @@
 // required for application
-var inquirer = require('inquirer');
-var fs = require('fs');
-const { type } = require('os');
+const inquirer = require('inquirer');
+const fs = require('fs');
+// import inquirer from 'inquirer';
+// import fs from 'fs';
 
+// required for application
+// import { Circle, Square, Triangle } from './library/shapes.js';// import overlay from './library/overlay.js';
+const shapes = require('./library/shapes.js');
+const overlay = require('./library/overlay.js');
 
 function init() {
   // create prompts in inquirer format
@@ -37,6 +42,27 @@ function init() {
     }
   ])
   .then((answers) => {
+
+    logoShapeColor = answers.logoShapeColor;
+    logoTextColor = answers.logoTextColor;
+    logoText = answers.logoText;
+    logoShape = answers.logoShape;
+    let newShape = "";
+
+    if (logoShape === "circle") {
+        newShape = new Circle();
+        newShape.logoShapeColor = logoShapeColor;
+        console.log(newShape.render());
+    } else if (logoShape === "square") {
+        newShape = new Square();
+        newShape.logoShapeColor = logoShapeColor;
+        console.log(newShape.render());
+    } else if (logoShape === "triangle") {
+        newShape = new Triangle();
+        newShape.logoShapeColor = logoShapeColor;
+        console.log(newShape.render());
+    }
+
     fs.writeFile("logo.svg", JSON.stringify(answers), (err) => {
       if (err) throw err;
       console.log("Your logo has been created!");
@@ -50,3 +76,5 @@ function init() {
     }
   });
 };
+
+init();

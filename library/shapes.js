@@ -1,8 +1,6 @@
 class Shapes {
     constructor() {
-        this.color = 'color';
-        this.text = 'text';
-        this.textColor = 'textColor';
+        this.logoShapeColor = 'color';
     }
     render() {
     }   
@@ -13,7 +11,7 @@ class Circle extends Shapes {
         super();
     }
     render() {
-        return `<circle r="45" cx="50" cy="50" fill="${this.color}"/>`;
+        return `<circle r="45" cx="50" cy="50" fill="${this.logoShapeColor}"/>`;
     }
 };
 class Square extends Shapes {
@@ -21,7 +19,7 @@ class Square extends Shapes {
         super();
     }
     render() {
-        return  `<rect width="100" height="100" fill="${this.color}"/>`;
+        return  `<rect width="100" height="100" fill="${this.logoShapeColor}"/>`;
     }
 }
 
@@ -30,10 +28,9 @@ class Triangle extends Shapes {
         super();
     }
     render() {
-        return `<polygon points="50,0 100,100 0,100" fill="${this.color}"/>`;
+        return `<polygon points="50,0 100,100 0,100" fill="${this.logoShapeColor}"/>`;
     }
 }
-
 
 
 module.exports = {Shapes, Circle, Square, Triangle};
