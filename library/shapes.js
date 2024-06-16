@@ -1,13 +1,42 @@
 class Shapes {
     constructor() {
-        this.color = "color;
+        this.color = 'color';
+        this.text = 'text';
+        this.textColor = 'textColor';
     }
-    
+    render() {
+    }   
 };
 
+class Circle extends Shapes {
+    constructor() {
+        super();
+    }
+    render() {
+        return `<circle r="45" cx="50" cy="50" fill="${this.color}"/>`;
+    }
+};
+class Square extends Shapes {
+    constructor() {
+        super();
+    }
+    render() {
+        return  `<rect width="100" height="100" fill="${this.color}"/>`;
+    }
+}
+
+class Triangle extends Shapes {
+    constructor() {
+        super();
+    }
+    render() {
+        return `<polygon points="50,0 100,100 0,100" fill="${this.color}"/>`;
+    }
+}
 
 
-module.exports = Shapes;
+
+module.exports = {Shapes, Circle, Square, Triangle};
 
     // // create a method to set the color of the shape
     // setColor(color) {
