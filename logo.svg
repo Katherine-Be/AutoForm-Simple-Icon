@@ -1,1 +1,4 @@
-{"logoText":"ttt","logoTextColor":"pink","logoShape":[],"logoShapeColor":"red"}
+
+<svg width="300" height="200"><polygon points="150,0 300,200 0,200" fill="green"/>
+            <text x="150" y="100" text-anchor="middle" fill="blue" font-size="80">red</text>
+        </svg>

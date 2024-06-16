@@ -1,4 +1,4 @@
-const shapes = require('../library/shapes');
+// const shapes = require('../library/shapes');
 
 
 // Write your test cases
@@ -24,3 +24,5 @@ describe('Shapes', () => {
     })
 
 });
+
+// module.exports = shapes;

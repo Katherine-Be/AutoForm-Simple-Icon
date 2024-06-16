@@ -6,8 +6,8 @@ const fs = require('fs');
 
 // required for application
 // import { Circle, Square, Triangle } from './library/shapes.js';// import overlay from './library/overlay.js';
-const shapes = require('./library/shapes.js');
-const overlay = require('./library/overlay.js');
+const { Shapes, Circle, Square, Triangle } = require('./library/shapes.js')
+const Overlay = require('./library/overlay.js');
 
 function init() {
   // create prompts in inquirer format
@@ -26,13 +26,13 @@ function init() {
     },
     {
         type: "input",
-        message: "Entera text color for your logo(color keyword or hexadecimal).", //TEST ANSWER FOR CORRECT FORMAT
+        message: "Enter a text color for your logo(color keyword or hexadecimal).", //TEST ANSWER FOR CORRECT FORMAT
         name: "logoTextColor"
     },
     {
-        type: "checkbox",
+        type: "list",
         message: "What shape would you like for your logo?",
-        choices: ["circle", "square", "triangle"],
+        choices: ['circle', 'square', 'triangle'],
         name: "logoShape"
     },
     {
@@ -42,37 +42,77 @@ function init() {
     }
   ])
   .then((answers) => {
-
-    logoShapeColor = answers.logoShapeColor;
-    logoTextColor = answers.logoTextColor;
-    logoText = answers.logoText;
-    logoShape = answers.logoShape;
-    let newShape = "";
-
-    if (logoShape === "circle") {
-        newShape = new Circle();
-        newShape.logoShapeColor = logoShapeColor;
-        console.log(newShape.render());
-    } else if (logoShape === "square") {
-        newShape = new Square();
-        newShape.logoShapeColor = logoShapeColor;
-        console.log(newShape.render());
-    } else if (logoShape === "triangle") {
-        newShape = new Triangle();
-        newShape.logoShapeColor = logoShapeColor;
-        console.log(newShape.render());
+    console.log(answers)
+    let newShape = null;
+    let newOverlay = null;
+    
+    
+    switch (answers.logoShape) {
+        case 'circle':
+            newShape = new Circle();
+            break;
+        case 'square':
+            newShape = new Square();
+            break;
+        case 'triangle':  
+            newShape = new Triangle();
+            break;
+        default: 
+            console.error("No shape selected");
     }
 
-    fs.writeFile("logo.svg", JSON.stringify(answers), (err) => {
-      if (err) throw err;
-      console.log("Your logo has been created!");
-    });
+    newShape.setColor(answers.logoShapeColor);
+    console.log(newShape);
+
+    if (answers) {
+        newOverlay = new Overlay();
+        newOverlay.setLogoText(answers.logoText);
+        newOverlay.setLogoTextColor(answers.logoTextColor);
+    }
+    return {newShape, newOverlay};
   })
+
+    .then(({newShape, newOverlay}) => {
+        const newSvg = `
+<svg width="300" height="200">${newShape.render()}${newOverlay.render()}</svg>
+`;
+
+        const newHTML = `
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Display</title>
+</head>
+
+<body>
+  <svg width="300" height="200">${newShape.render()}${newOverlay.render()}</svg>
+</body>
+</html>
+`;
+        
+        fs.writeFile("logo.svg", newSvg, (err) => {
+          if (err) {
+            console.error("Error creating SVG file:", err);
+          } else {
+            console.log("Generated logo.svg!");
+          }
+        });
+
+        fs.writeFile("logo.html", newHTML, (err) => {
+          if (err) {
+            console.error("Error creating html file:", err);
+          } else {
+            console.log("Open logo.html in your browser to view your logo!");
+          }
+        });
+ })
+
+
   .catch((error) => {
     if (error.isTtyError) {
-      // Prompt couldn't be rendered in the current environment
+      console.error("Prompt couldn't be rendered in the current environment");
     } else {
-      // Something else went wrong
+      console.error("Something else went wrong:", error); // Print error using console.error
     }
   });
 };
