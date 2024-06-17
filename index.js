@@ -26,7 +26,7 @@ function init() {
     },
     {
         type: "input",
-        message: "Enter a text color for your logo(color keyword or hexadecimal).", //TEST ANSWER FOR CORRECT FORMAT
+        message: "Enter a text color for your logo(color keyword or hexadecimal(without #)).", //TEST ANSWER FOR CORRECT FORMAT
         name: "logoTextColor"
     },
     {
@@ -37,7 +37,7 @@ function init() {
     },
     {
         type: "input",
-        message: "What is the color of the shape you chose?",
+        message: "What is the color of the shape you chose(color keyword or hexadecimal(without #))?",
         name: "logoShapeColor"
     }
   ])
@@ -47,22 +47,23 @@ function init() {
     console.log(answers)
     let newShape = null;
     let newOverlay = null;
-    
+    const colorKeywords = ['red', 'blue', 'yellow', 'green', 'purple', 'orange', 'black', 'white', 'gray'];
+
     //  Check logoText length
     if (answers.logoText.length > 3) {
         throw new Error("Logo text must be three characters or less.");
         return;
     }
 
-    //  Check if text color is accepted type
-    if (!answers.logoTextColor.match(/^[0-9A-Fa-f]{6}$/)) {
-        throw new Error("Invalid text color. Please enter a valid hexadecimal color code.");
+    //  Check if text color is accepted type - hex or keyword
+    if (!answers.logoTextColor.match(/^[0-9A-Fa-f]{6}$/) && !colorKeywords.includes(answers.logoTextColor.toLowerCase())) {
+      throw new Error("Invalid text color. Please enter a valid hexadecimal color code.");
         return;
     }
 
     //  Check if shape color is accepted type
-    if (!answers.logoShapeColor.match(/^[0-9A-Fa-f]{6}$/)) {
-        throw new Error("Invalid shape color. Please enter a valid hexadecimal color code.");
+    if (!answers.logoShapeColor.match(/^[0-9A-Fa-f]{6}$/) && !colorKeywords.includes(answers.logoShapeColor.toLowerCase())) {
+      throw new Error("Invalid shape color. Please enter a valid hexadecimal color code.");
         return;
     }
     
@@ -114,7 +115,7 @@ function init() {
 </html>
 `;
         
-        fs.writeFile("logo.svg", newSvg, (err) => {
+        fs.writeFile("./images/logo.svg", newSvg, (err) => {
           if (err) {
             console.error("Error creating SVG file:", err);
           } else {
