@@ -1,16 +1,16 @@
-// required for application
+//  Import required modules
 const inquirer = require('inquirer');
 const fs = require('fs');
 // import inquirer from 'inquirer';
 // import fs from 'fs';
 
-// required for application
-// import { Circle, Square, Triangle } from './library/shapes.js';// import overlay from './library/overlay.js';
+//  Import classes
 const { Shapes, Circle, Square, Triangle } = require('./library/shapes.js')
 const Overlay = require('./library/overlay.js');
 
+//<-----Start function----->
 function init() {
-  // create prompts in inquirer format
+  // Create prompts in inquirer format
   inquirer.prompt([
       // prompt format:
       // {
@@ -41,12 +41,32 @@ function init() {
         name: "logoShapeColor"
     }
   ])
+
+//<-----Process answers----->
   .then((answers) => {
     console.log(answers)
     let newShape = null;
     let newOverlay = null;
     
+    //  Check logoText length
+    if (answers.logoText.length > 3) {
+        throw new Error("Logo text must be three characters or less.");
+        return;
+    }
+
+    //  Check if text color is accepted type
+    if (!answers.logoTextColor.match(/^[0-9A-Fa-f]{6}$/)) {
+        throw new Error("Invalid text color. Please enter a valid hexadecimal color code.");
+        return;
+    }
+
+    //  Check if shape color is accepted type
+    if (!answers.logoShapeColor.match(/^[0-9A-Fa-f]{6}$/)) {
+        throw new Error("Invalid shape color. Please enter a valid hexadecimal color code.");
+        return;
+    }
     
+    //  Set newShape based on user selection
     switch (answers.logoShape) {
         case 'circle':
             newShape = new Circle();
@@ -61,17 +81,21 @@ function init() {
             console.error("No shape selected");
     }
 
+    //  Set newShape color
     newShape.setColor(answers.logoShapeColor);
     console.log(newShape);
 
+    //  Set newOverlay
     if (answers) {
         newOverlay = new Overlay();
         newOverlay.setLogoText(answers.logoText);
         newOverlay.setLogoTextColor(answers.logoTextColor);
     }
+
     return {newShape, newOverlay};
   })
 
+  //<-----Render new SVG----->
     .then(({newShape, newOverlay}) => {
         const newSvg = `
 <svg width="300" height="200">${newShape.render()}${newOverlay.render()}</svg>
@@ -107,10 +131,16 @@ function init() {
         });
  })
 
-
+//<-----Catch errors----->
   .catch((error) => {
     if (error.isTtyError) {
       console.error("Prompt couldn't be rendered in the current environment");
+    } else if (error.message.startsWith("Logo text")) {
+      console.error("Logo text must be less than three characters.");
+    } else if (error.message.startsWith("Invalid text color")) {
+        console.error("Invalid text color. Please enter a valid hexadecimal color code.");
+    } else if (error.message.startsWith("Invalid shape color")) {
+        console.error("Invalid shape color. Please enter a valid hexadecimal color code.");
     } else {
       console.error("Something else went wrong:", error); // Print error using console.error
     }
