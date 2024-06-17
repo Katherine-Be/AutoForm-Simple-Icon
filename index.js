@@ -106,7 +106,8 @@ function init() {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Image Display</title>
+  <title>Your SVG Icon</title>
+      <link rel="icon" href="./AutoForm_Logo.png" type="image/icon">
 </head>
 
 <body>
@@ -119,15 +120,15 @@ function init() {
           if (err) {
             console.error("Error creating SVG file:", err);
           } else {
-            console.log("Generated logo.svg!");
+            console.log("Generated logo.svg inside the images folder!");
           }
         });
 
-        fs.writeFile("logo.html", newHTML, (err) => {
+        fs.writeFile("./images/logo.html", newHTML, (err) => {
           if (err) {
             console.error("Error creating html file:", err);
           } else {
-            console.log("Open logo.html in your browser to view your logo!");
+            console.log("Open logo.html (found the images folder) in your browser to view your logo!");
           }
         });
  })
