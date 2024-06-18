@@ -17,7 +17,7 @@ describe('Shapes', () => {
         expect(square.render()).toBe(`<rect width="300" height="200" fill="red"/>`);
     }),
     //  Test triangle
-    test('render hexadecimally green triangle', () => {
+    test('render green triangle', () => {
         const triangle = new shapes.Triangle();
         triangle.logoShapeColor = '#00FF00';
         expect(triangle.render()).toBe(`<polygon points="150,0 300,200 0,200" fill="#00FF00"/>`);

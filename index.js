@@ -14,17 +14,17 @@ function init() {
       // {
       // allowed user input type,
       // question/prompt displayed in console for user, 
-      // object name to reference user's answer
       // choices (if applicable),
+      // object name to reference user's answer,
       // },
     {
         type: "input",
-        message: "What letters would you like in your logo?",
-        name: "logoText" // NEED TO LIMIT TO THREE CHARACTERS
+        message: "What letters would you like in your logo? (Case sensitive, max 3 characters)",
+        name: "logoText"
     },
     {
         type: "input",
-        message: "Enter a text color for your logo(color keyword or hexadecimal(without #)).", //TEST ANSWER FOR CORRECT FORMAT
+        message: "Enter a text color for your logo. (Color keyword or hexadecimal without #)", //TEST ANSWER FOR CORRECT FORMAT
         name: "logoTextColor"
     },
     {
@@ -35,7 +35,7 @@ function init() {
     },
     {
         type: "input",
-        message: "What is the color of the shape you chose(color keyword or hexadecimal(without #))?",
+        message: "What is the color of the shape you chose? (Color keyword or hexadecimal without #)",
         name: "logoShapeColor"
     }
   ])
@@ -47,7 +47,7 @@ function init() {
     let newOverlay = null;
     const colorKeywords = ['red', 'blue', 'yellow', 'green', 'purple', 'orange', 'black', 'white', 'gray'];
 
-    //  Check logoText length
+    //  Check logoText length - limit to 3 characters
     if (answers.logoText.length > 3) {
         throw new Error("Logo text must be three characters or less.");
         return;
@@ -59,7 +59,7 @@ function init() {
         return;
     }
 
-    //  Check if shape color is accepted type
+    //  Check if shape color is accepted type - hex or keyword
     if (!answers.logoShapeColor.match(/^[0-9A-Fa-f]{6}$/) && !colorKeywords.includes(answers.logoShapeColor.toLowerCase())) {
       throw new Error("Invalid shape color. Please enter a valid hexadecimal color code.");
         return;
