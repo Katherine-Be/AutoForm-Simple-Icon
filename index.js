@@ -1,8 +1,6 @@
 //  Import required modules
 const inquirer = require('inquirer');
 const fs = require('fs');
-// import inquirer from 'inquirer';
-// import fs from 'fs';
 
 //  Import classes
 const { Shapes, Circle, Square, Triangle } = require('./library/shapes.js')
